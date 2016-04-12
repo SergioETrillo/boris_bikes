@@ -26,7 +26,8 @@ describe DockingStation do
 	end
 
 	it "check if a bike is docked then I use the docking station" do
-		expect(@docking_station.dock_bike(@bike)).to eq @bike
+
+		expect(subject.dock_bike(@bike)).to eq @bike
 	end
 	
 	it 'raises error when releasing a bike with zero bikes' do
