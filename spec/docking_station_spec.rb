@@ -12,7 +12,8 @@ describe DockingStation do
 
 
 	it "releases working bikes" do
-		bike = subject.release_bike
+		@docking_station.dock_bike(@bike)
+		bike = @docking_station.release_bike
 		expect(bike).to be_working
 		#expect(actual).to be_an_instance_of(expected)
 	end
@@ -28,8 +29,8 @@ describe DockingStation do
 	end
 	
 	it 'raises error when releasing a bike with zero bikes' do
-		
-		expect{@docking_station.release_bike}.to raise_error
+		@ds2 = DockingStation.new
+		expect{@ds2.release_bike}.to raise_error(RuntimeError, "a")
 	end
 end
 
