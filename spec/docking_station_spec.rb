@@ -3,11 +3,13 @@ require "bike"
 
 
 describe DockingStation do 
+
 	before(:all) do
 		@bike = Bike.new
 		@docking_station = DockingStation.new
 	end 	
 	# one liner syntax:
+
 	it { is_expected.to respond_to :release_bike }
 
 
@@ -19,7 +21,6 @@ describe DockingStation do
 	end
 	
 	it "docks a bike" do
-
 		#expect(obj).to respond_to(:foo).with(1).argument
 		expect(@docking_station).to respond_to(:dock_bike).with(1).argument
 	end
@@ -30,7 +31,14 @@ describe DockingStation do
 	
 	it 'raises error when releasing a bike with zero bikes' do
 		@ds2 = DockingStation.new
-		expect{@ds2.release_bike}.to raise_error(RuntimeError, "a")
+		expect{@ds2.release_bike}.to raise_error(RuntimeError, "Zero bikes")
+	end
+
+	it 'raises error when docking a bike on a station with 1 bike' do
+		@ds3 = DockingStation.new
+		@ds3.dock_bike(@bike)
+		@b2 = Bike.new 
+		expect{@ds3.dock_bike(@b2)}.to raise_error(RuntimeError, "a")
 	end
 end
 
