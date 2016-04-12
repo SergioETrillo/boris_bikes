@@ -23,8 +23,8 @@ describe DockingStation do
 		expect(@docking_station).to respond_to(:dock_bike).with(1).argument
 	end
 
-	it " check if a bike is docked then I use the docking station" do
-		expect(@docking_station.dock(bike)).to eq bike
+	it "check if a bike is docked then I use the docking station" do
+		expect(@docking_station.dock_bike(@bike)).to eq @bike
 	end
 end
 
