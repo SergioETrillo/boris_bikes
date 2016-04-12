@@ -14,32 +14,26 @@ describe DockingStation do
 
 
 	it "releases working bikes" do
-		@docking_station.dock_bike(@bike)
+		@docking_station.dock(@bike)
 		bike = @docking_station.release_bike
 		expect(bike).to be_working
-		#expect(actual).to be_an_instance_of(expected)
+
 	end
 	
 	it "docks a bike" do
-		#expect(obj).to respond_to(:foo).with(1).argument
-		expect(@docking_station).to respond_to(:dock_bike).with(1).argument
+		expect(subject).to respond_to(:dock).with(1).argument
 	end
 
 	it "check if a bike is docked then I use the docking station" do
-
-		expect(subject.dock_bike(@bike)).to eq @bike
+		expect(subject.dock(@bike)).to eq @bike
 	end
 	
 	it 'raises error when releasing a bike with zero bikes' do
-		@ds2 = DockingStation.new
-		expect{@ds2.release_bike}.to raise_error(RuntimeError, "Zero bikes")
+		expect{subject.release_bike}.to raise_error(RuntimeError, "no bikes")
 	end
 
 	it 'raises error when docking a bike on a station with 1 bike' do
-		@ds3 = DockingStation.new
-		@ds3.dock_bike(@bike)
-		@b2 = Bike.new 
-		expect{@ds3.dock_bike(@b2)}.to raise_error(RuntimeError, "a")
+		expect{@docking_station.dock(@bike)}.to raise_error(RuntimeError, "Over-Capacity")
 	end
 end
 
