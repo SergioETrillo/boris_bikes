@@ -8,6 +8,8 @@ describe DockingStation do
 
 	context "#release_bike" do	
 		let(:bike) { double(:bike) }
+		let(:broken_bike) { double(:broken_bike) }
+
 		it "releases working bikes" do
 			ds.dock(bike)
 			allow(bike).to receive(:broken?).and_return(false)
@@ -16,38 +18,47 @@ describe DockingStation do
 		end
 		
 		it "does not release broken bikes" do
-			double(:broken_bike)
-			broken_bike.report_broken
+			allow(broken_bike).to receive(:report_broken).and_return(true)
+			allow(broken_bike).to receive(:broken?).and_return(true)
+			#broken_bike.report_broken
+			#allow(broken_bike).to receive(:dock).and_return(true)
 			ds.dock(broken_bike)
-			# expect(subject.release_bike).to be nil
 			expect{ds.release_bike}.to raise_error(RuntimeError, "no working bikes available")
 		end
 	end
 	
 	context "#dock" do
+
+		let(:bike) { double(:bike) }
+		let(:broken_bike) { double(:broken_bike) }
+
 		it "responds to dock with 1 argument" do
 			expect(subject).to respond_to(:dock).with(1).argument 
 		end
 	  
 		it "docks a bike" do
-			double(:bike)
+			#double(:bike)
 			expect(subject.dock(bike)).to eq bike
 		end
 		
 		it "docks a broken bike" do
-			double(:broken_bike)
-			broken_bike.report_broken
+			#double(:broken_bike)
+			allow(broken_bike).to receive(:report_broken).and_return(true)
+			#broken_bike.report_broken
 			expect(subject.dock(broken_bike)).to eq broken_bike
 		end
 	end
 	
 	context "test exceptions" do
+
+		let(:bike) { double(:bike) }
+
 		it 'raises error when releasing a bike with zero bikes' do
 			expect{subject.release_bike}.to raise_error(RuntimeError, "no bikes")
 		end
 	
 		it 'raises error when docking on a full station' do 
-			double(:bike)
+			#double(:bike)
 			ds.capacity.times { subject.dock(bike) }
 			expect{subject.dock(bike)}.to raise_error(RuntimeError, "Over-Capacity")
 		end
