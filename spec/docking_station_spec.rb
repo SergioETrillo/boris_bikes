@@ -1,38 +1,37 @@
 require "docking_station"
-require "bike"
 
 describe DockingStation do 
 
-	before(:all) do
-		@bike = Bike.new
-		@docking_station = DockingStation.new
-	end 	
-	# one liner syntax:
-
 	it { is_expected.to respond_to :release_bike }
 
-
-	it "releases working bikes" do
-		@docking_station.dock(@bike)
-		bike = @docking_station.release_bike
-		expect(bike).to be_working
-
+	context "#release_bike" do	
+		it "releases working bikes" do
+			subject.dock(Bike.new)
+			bike = subject.release_bike
+			expect(bike).to be_working
+		end
 	end
 	
-	it "docks a bike" do
-		expect(subject).to respond_to(:dock).with(1).argument
-	end
-
-	it "check if a bike is docked then I use the docking station" do
-		expect(subject.dock(@bike)).to eq @bike
+	context "#dock" do
+		it "responds to dock with 1 argument" do
+			expect(subject).to respond_to(:dock).with(1).argument 
+		end
+	  
+		it "check if a bike is docked then I use the docking station" do
+			bike = Bike.new
+			expect(subject.dock(bike)).to eq bike
+		end
 	end
 	
-	it 'raises error when releasing a bike with zero bikes' do
-		expect{subject.release_bike}.to raise_error(RuntimeError, "no bikes")
-	end
-
-	it 'raises error when docking a bike on a station with 1 bike' do
-		expect{@docking_station.dock(@bike)}.to raise_error(RuntimeError, "Over-Capacity")
+	context "test exceptions" do
+		it 'raises error when releasing a bike with zero bikes' do
+			expect{subject.release_bike}.to raise_error(RuntimeError, "no bikes")
+		end
+	
+		it 'raises error when docking a bike on a station with 1 bike' do
+			subject.dock(Bike.new)
+			expect{subject.dock(Bike.new)}.to raise_error(RuntimeError, "Over-Capacity")
+		end
 	end
 end
 
