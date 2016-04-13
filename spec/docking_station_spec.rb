@@ -17,7 +17,7 @@ describe DockingStation do
 			expect(subject).to respond_to(:dock).with(1).argument 
 		end
 	  
-		it "check if a bike is docked then I use the docking station" do
+		it "docks a bike" do
 			bike = Bike.new
 			expect(subject.dock(bike)).to eq bike
 		end
@@ -28,8 +28,8 @@ describe DockingStation do
 			expect{subject.release_bike}.to raise_error(RuntimeError, "no bikes")
 		end
 	
-		it 'raises error when docking a bike on a station with 1 bike' do
-			subject.dock(Bike.new)
+		it 'raises error when docking on a full station' do
+			20.times { subject.dock(Bike.new) }
 			expect{subject.dock(Bike.new)}.to raise_error(RuntimeError, "Over-Capacity")
 		end
 	end
