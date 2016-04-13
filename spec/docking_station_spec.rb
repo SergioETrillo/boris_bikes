@@ -28,8 +28,8 @@ describe DockingStation do
 			expect{subject.release_bike}.to raise_error(RuntimeError, "no bikes")
 		end
 	
-		it 'raises error when docking on a full station' do
-			20.times { subject.dock(Bike.new) }
+		it 'raises error when docking on a full station' do 
+			DockingStation::DEFAULT_CAPACITY.times { subject.dock(Bike.new) }
 			expect{subject.dock(Bike.new)}.to raise_error(RuntimeError, "Over-Capacity")
 		end
 	end
