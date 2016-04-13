@@ -10,7 +10,15 @@ describe DockingStation do
 		it "releases working bikes" do
 			ds.dock(Bike.new)
 			bike = ds.release_bike
-			expect(bike).to be_working
+			expect(bike).not_to be_broken
+		end
+		
+		it "does not release broken bikes" do
+			broken_bike = Bike.new
+			broken_bike.report_broken
+			ds.dock(broken_bike)
+			# expect(subject.release_bike).to be nil
+			expect{ds.release_bike}.to raise_error(RuntimeError, "no working bikes available")
 		end
 	end
 	
@@ -22,6 +30,12 @@ describe DockingStation do
 		it "docks a bike" do
 			bike = Bike.new
 			expect(subject.dock(bike)).to eq bike
+		end
+		
+		it "docks a broken bike" do
+			broken_bike = Bike.new
+			broken_bike.report_broken
+			expect(subject.dock(broken_bike)).to eq broken_bike
 		end
 	end
 	
