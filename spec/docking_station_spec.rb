@@ -7,14 +7,16 @@ describe DockingStation do
 	it { is_expected.to respond_to :release_bike }
 
 	context "#release_bike" do	
+		let(:bike) { double(:bike) }
 		it "releases working bikes" do
-			ds.dock(Bike.new)
+			ds.dock(bike)
+			allow(bike).to receive(:broken?).and_return(false)
 			bike = ds.release_bike
 			expect(bike).not_to be_broken
 		end
 		
 		it "does not release broken bikes" do
-			broken_bike = Bike.new
+			double(:broken_bike)
 			broken_bike.report_broken
 			ds.dock(broken_bike)
 			# expect(subject.release_bike).to be nil
@@ -28,12 +30,12 @@ describe DockingStation do
 		end
 	  
 		it "docks a bike" do
-			bike = Bike.new
+			double(:bike)
 			expect(subject.dock(bike)).to eq bike
 		end
 		
 		it "docks a broken bike" do
-			broken_bike = Bike.new
+			double(:broken_bike)
 			broken_bike.report_broken
 			expect(subject.dock(broken_bike)).to eq broken_bike
 		end
@@ -45,8 +47,9 @@ describe DockingStation do
 		end
 	
 		it 'raises error when docking on a full station' do 
-			ds.capacity.times { subject.dock(Bike.new) }
-			expect{subject.dock(Bike.new)}.to raise_error(RuntimeError, "Over-Capacity")
+			double(:bike)
+			ds.capacity.times { subject.dock(bike) }
+			expect{subject.dock(bike)}.to raise_error(RuntimeError, "Over-Capacity")
 		end
 
 		it 'sets new docking station with capacity 35' do
