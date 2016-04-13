@@ -3,7 +3,7 @@ require "docking_station"
 describe DockingStation do 
 
 	let(:bike) { double(:bike) }
-	let(:broken_bike) { double(:broken_bike) }
+	let(:broken_bike) { double(:broken_bike, report_broken: true, broken?: true) }
 
 	subject(:ds) {DockingStation.new}
 
@@ -19,8 +19,8 @@ describe DockingStation do
 		end
 		
 		it "does not release broken bikes" do
-			allow(broken_bike).to receive(:report_broken).and_return(true)
-			allow(broken_bike).to receive(:broken?).and_return(true)
+			#allow(broken_bike).to receive(:report_broken).and_return(true)
+			#allow(broken_bike).to receive(:broken?).and_return(true)
 			ds.dock(broken_bike)
 			expect{ds.release_bike}.to raise_error(RuntimeError, "no working bikes available")
 		end
