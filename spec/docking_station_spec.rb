@@ -4,6 +4,7 @@ describe DockingStation do
 
 	let(:bike) { double(:bike) }
 	let(:broken_bike) { double(:broken_bike, report_broken: true, broken?: true) }
+	let(:broken_bike2) { double(:broken_bike2, report_broken: true, broken?: true) }
 
 	subject(:ds) {DockingStation.new}
 
@@ -62,5 +63,11 @@ describe DockingStation do
 			expect(ds.capacity).to eq 20
 		end
 
+	end
+	
+	it "selects ALL broken bikes" do
+		ds.dock(broken_bike)
+		ds.dock(broken_bike2)
+		expect(ds.select_broken_bikes).to eq [broken_bike, broken_bike2]
 	end
 end

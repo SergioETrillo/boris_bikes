@@ -1,4 +1,6 @@
 require_relative './bike'
+require_relative './van'
+require_relative './garage'
 
 class DockingStation
 
@@ -22,6 +24,13 @@ class DockingStation
 		@bikes << bike
 		@bikes.last
 	end
+	
+	def select_broken_bikes
+		broken_bikes = @bikes.select{ |b| b.broken? }
+		@bikes.reject!{ |b| b.broken? }
+		broken_bikes
+	end
+	
 	
 	private
 	
