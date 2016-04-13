@@ -2,12 +2,14 @@ require "docking_station"
 
 describe DockingStation do 
 
+	subject(:ds) {DockingStation.new}
+
 	it { is_expected.to respond_to :release_bike }
 
 	context "#release_bike" do	
 		it "releases working bikes" do
-			subject.dock(Bike.new)
-			bike = subject.release_bike
+			ds.dock(Bike.new)
+			bike = ds.release_bike
 			expect(bike).to be_working
 		end
 	end
@@ -29,9 +31,19 @@ describe DockingStation do
 		end
 	
 		it 'raises error when docking on a full station' do 
-			DockingStation::DEFAULT_CAPACITY.times { subject.dock(Bike.new) }
+			ds.capacity.times { subject.dock(Bike.new) }
 			expect{subject.dock(Bike.new)}.to raise_error(RuntimeError, "Over-Capacity")
 		end
+
+		it 'sets new docking station with capacity 35' do
+			ds = DockingStation.new(35)
+			expect(ds.capacity).to eq 35
+		end
+
+		it 'sets new docking station with default capacity' do
+			expect(ds.capacity).to eq 20
+		end
+
 	end
 end
 
