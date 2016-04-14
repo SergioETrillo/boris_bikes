@@ -2,7 +2,7 @@ require "docking_station"
 
 describe DockingStation do 
 
-	let(:bike) { double(:bike) }
+	let(:bike) { double(:bike, broken?: false) }
 	let(:broken_bike) { double(:broken_bike, report_broken: true, broken?: true) }
 	let(:broken_bike2) { double(:broken_bike2, report_broken: true, broken?: true) }
 
@@ -64,11 +64,22 @@ describe DockingStation do
 		end
 
 	end
+
+	context "#select_broken_bikes" do
 	
-	it "selects ALL broken bikes" do
-		ds.dock(broken_bike)
-		ds.dock(broken_bike2)
-		expect(ds.select_broken_bikes).to eq [broken_bike, broken_bike2]
+		it "selects ALL broken bikes" do
+			ds.dock(broken_bike)
+			ds.dock(broken_bike2)
+			expect(ds.select_broken_bikes).to eq [broken_bike, broken_bike2]
+		end
+
+		it "removes all broken bikes from station" do
+			ds.dock(bike)
+			ds.dock(broken_bike)
+			ds.dock(broken_bike2)
+			ds.select_broken_bikes
+			expect(ds.bikes).to eq [bike]
+		end
 	end
+
 end
-#test gem makersinit
