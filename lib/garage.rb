@@ -1,4 +1,13 @@
 class Garage
-  def fix_bikes(bikes)
-  end
+
+	attr_reader :bikes 
+
+	def initialize
+		@bikes = []
+	end
+
+	def store(van)
+		@bikes += van.unload
+	end
+
 end

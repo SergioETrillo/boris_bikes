@@ -26,12 +26,30 @@ describe Van do
 	end
 
   context 'when collecting broken bikes from dockingstation' do
-
+	
+	
 
     it "collects broken bikes" do
       allow(station).to receive(:select_broken_bikes).and_return([broken_bike, broken_bike2])
       expect(subject.collect_broken_bikes(station)).to eq [broken_bike, broken_bike2]
     end
+
+  end
+
+  context ' when delivering to garages' do
+
+  	it 'unloading broken bikes' do
+  		allow(station).to receive(:select_broken_bikes).and_return([broken_bike, broken_bike2])
+  		subject.collect_broken_bikes(station)
+  		expect(subject.unload).to eq [broken_bike, broken_bike2]
+  	end
+
+  	it 'van is empty after unloading' do
+  		allow(station).to receive(:select_broken_bikes).and_return([broken_bike, broken_bike2])
+  		subject.collect_broken_bikes(station)
+  		subject.unload
+  		expect(subject.broken_bikes).to be_empty
+  	end
 
   end
 

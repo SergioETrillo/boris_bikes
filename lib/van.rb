@@ -14,4 +14,11 @@ class Van
   def remaining_capacity
     DEFAULT_CAPACITY - @broken_bikes.length
   end
+
+  def unload
+  	delivery = @broken_bikes
+  	@broken_bikes = []
+  	delivery
+  end
+
 end
