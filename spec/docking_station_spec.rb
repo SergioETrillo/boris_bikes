@@ -71,3 +71,4 @@ describe DockingStation do
 		expect(ds.select_broken_bikes).to eq [broken_bike, broken_bike2]
 	end
 end
+#test gem makersinit
