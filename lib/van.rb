@@ -1,5 +1,5 @@
 class Van
-	DEFAULT_CAPACITY = 2
+	DEFAULT_CAPACITY = 20
 
   attr_reader :broken_bikes
 
@@ -19,6 +19,9 @@ class Van
   	delivery = @broken_bikes
   	@broken_bikes = []
   	delivery
+  end
+
+  def load
   end
 
 end

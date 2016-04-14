@@ -14,4 +14,13 @@ class Garage
     bikes.each {|b|b.fix}
   end
 
+  def select_working_bikes(remaining_capacity)
+  	if bikes.length <= remaining_capacity
+			delivery = bikes
+		else
+			delivery = bikes.first(remaining_capacity)
+		end
+		@bikes -= delivery
+		delivery
+  end
 end

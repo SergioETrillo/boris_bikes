@@ -8,20 +8,21 @@ describe Van do
 	let(:bike3) { double(:bike3, report_broken: false, broken?: false) }
   let(:station) { double(:station, :broken_bikes => [broken_bike, broken_bike2]) }
   let(:station_3) { double(:station_3, :broken_bikes => [broken_bike, broken_bike2,broken_bike3]) }
+  let(:garage) {double(:garage, )}
   context 'when creating a new van' do
 
 		it 'should have no broken bikes' do
 			expect(subject.broken_bikes).to be_empty
 		end
 
-		it { is_expected.to respond_to :collect_broken_bikes }
+		it { is_expected.to respond_to :collect_broken_bikes, :load }
 
 		it 'capacity is 2' do
-			expect(Van::DEFAULT_CAPACITY).to eq 2
+			expect(Van::DEFAULT_CAPACITY).to eq 20
 		end
 
     it 'remaining capacity is 2' do
-      expect(subject.remaining_capacity).to eq 2
+      expect(subject.remaining_capacity).to eq 20
     end
 	end
 
@@ -52,6 +53,5 @@ describe Van do
   	end
 
   end
-
 
 end

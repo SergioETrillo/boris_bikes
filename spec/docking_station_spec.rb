@@ -9,7 +9,7 @@ describe DockingStation do
 	let(:van) {double(:van, remaining_capacity: 2)}
 	subject(:ds) {DockingStation.new}
 
-	it { is_expected.to respond_to :release_bike }
+	it { is_expected.to respond_to :release_bike,:select_broken_bikes }
 
 	context "#release_bike" do
 
@@ -68,7 +68,9 @@ describe DockingStation do
 
 	context "#select_broken_bikes" do
 
-		context "when there are fewer or equal number of broken bikes than remaining capacity"
+		it 
+
+		context "when there are fewer or equal number of broken bikes than van remaining capacity" do
 
 			it "releases ALL broken bikes" do
 				ds.dock(broken_bike)
@@ -83,6 +85,7 @@ describe DockingStation do
 				ds.select_broken_bikes(van.remaining_capacity)
 				expect(ds.bikes).to eq [bike]
 			end
+		end
 
 		context "when there are more broken bikes than the remaining capacity of van" do
 
