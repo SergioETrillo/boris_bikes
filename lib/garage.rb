@@ -1,6 +1,6 @@
 class Garage
 
-	attr_reader :bikes 
+	attr_accessor :bikes
 
 	def initialize
 		@bikes = []
@@ -9,5 +9,9 @@ class Garage
 	def store(van)
 		@bikes += van.unload
 	end
+
+  def fix_bikes
+    bikes.each {|b|b.fix}
+  end
 
 end
