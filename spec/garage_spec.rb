@@ -6,9 +6,10 @@ describe Garage do
 	let(:broken_bike) { double(:broken_bike, report_broken: true, broken?: true) }
 	let(:broken_bike2) { double(:broken_bike2, report_broken: true, broken?: true) }
   let(:broken_bike3) { double(:broken_bike3, report_broken: true, broken?: true) }
-  load = [:broken_bike,:broken_bike2,:broken_bike3]
+  load_broken = [:broken_bike,:broken_bike2,:broken_bike3]
   let(:bike) { double(:bike, report_broken: false, ) }
-  let(:van) { double(:van, remaining_capacity: 2, broken_bikes: load , unload: load) }
+  load_working = [:bike, :bike, :bike]
+  let(:van) { double(:van, remaining_capacity: 4, broken_bikes: load_broken , unload: load_broken) }
   subject(:garage) { Garage.new }
 
   it { is_expected.to respond_to :store, :fix_bikes, :select_working_bikes }
@@ -22,7 +23,7 @@ describe Garage do
 
 	context "dealing with vans" do
 
-		it 'stores broken bikes from a van' do 
+		it 'stores broken bikes from a van' do
 			subject.store(van)
 			expect(subject.bikes).to include *(van.broken_bikes)
 		end
@@ -53,12 +54,10 @@ describe Garage do
 				expect(garage.select_working_bikes(van.remaining_capacity)).to eq [bike]
 			end
 
-			xit "removes all broken bikes from station" do
-				ds.dock(bike)
-				ds.dock(broken_bike)
-				ds.dock(broken_bike2)
-				ds.select_broken_bikes(van.remaining_capacity)
-				expect(ds.bikes).to eq [bike]
+			it "removes all working bikes from station" do
+        garage.bikes += load_working
+        puts "garage.bikes: #{garage.bikes}"
+        expect(garage.select_working_bikes(van.remaining_capacity)).to include *load_working
 			end
 		end
 

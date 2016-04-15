@@ -66,9 +66,7 @@ describe DockingStation do
 
 	end
 
-	context "#select_broken_bikes" do
-
-		it 
+	context "#select_broken_bikes pending?" do
 
 		context "when there are fewer or equal number of broken bikes than van remaining capacity" do
 
